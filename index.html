@@ -10,19 +10,31 @@
             align-items: center;     
             height: 100vh;           
             margin: 0;
-            position: relative; /* This helps us pin the footer to the bottom */
+            position: relative; 
         }
 
         h1 {
-            font-family: 'Cursive', sans-serif; 
-            font-size: 50px;
+            /* This line makes it cursive and italic */
+            font-family: "Brush Script MT", "Comic Sans MS", cursive; 
+            font-style: italic;
+            font-weight: normal; /* Cursive looks better when not too thick */
+            font-size: 40px;     /* Made it a little bigger for you */
             color: #333;
         }
 
-        footer {
+        .footer-left {
             position: absolute;
-            bottom: 10px; /* 10 pixels from the bottom */
-            left: 10px;   /* 10 pixels from the left */
+            bottom: 20px;
+            left: 20px;
+            font-family: sans-serif;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .footer-right {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
             font-family: sans-serif;
             font-size: 14px;
             color: #777;
@@ -33,9 +45,13 @@
 
     <h1>Lawrence M Lopez</h1>
 
-    <footer>
+    <div class="footer-left">
         &copy; Lawrence M Lopez
-    </footer>
+    </div>
+
+    <div class="footer-right">
+        about &nbsp;-&nbsp; contact &nbsp;-&nbsp; gear &nbsp;-&nbsp; think
+    </div>
 
 </body>
 </html>
