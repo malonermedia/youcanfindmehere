@@ -4,90 +4,81 @@
     <title>Lawrence Lopez</title>
     <style>
         body {
-            
-            background-color: #f5f5dc; /* Beige */
+            background-color: #faf9f6; /* Off-white */
             display: flex;
-            justify-content: center; 
-            align-items: center;     
-            height: 100vh;           
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            position: relative; 
-            <div id="manila-clock"></div>
+            position: relative;
+            font-family: "Times New Roman", Times, serif;
         }
 
-    h1 {
-    /* This sets the font to Times New Roman and makes it italic */
-    font-family: "Times New Roman", Times, serif; 
-    font-style: italic;
-    font-weight: normal; 
-    font-size: 70px;
-    color: #333;
-        }
-
-        a { text-decoration: none; color: inherit; }
-
-        .footer-left {
+        /* 1. The Clock Styling */
+        #manila-clock {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            font-family: sans-serif;
-            font-size: 14px;
-            color: #777;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            color: #888;
+            letter-spacing: 1px;
         }
 
+        /* 2. The Main Title */
+        h1 {
+            font-style: italic;
+            font-weight: normal;
+            font-size: 90px;
+            color: #333;
+        }
+
+        /* 3. The Footer Links */
         .footer-right {
             position: absolute;
             bottom: 20px;
             right: 20px;
-            font-family: sans-serif;
-            font-size: 14px;
-            color: #777;
         }
-            #manila-clock {
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: "Times New Roman", Times, serif;
-    font-size: 16px;
-    color: #888; /* Subtle gray */
-    letter-spacing: 1px;
-}
 
-            <script>
-    function updateManilaTime() {
-        const now = new Date();
-        const options = {
-            timeZone: 'Asia/Manila',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: true
-        };
-        const manilaTime = now.toLocaleTimeString('en-US', options);
-        document.getElementById('manila-clock').innerText = "Manila: " + manilaTime;
-    }
-
-    // Update the clock immediately, then every 1 second
-    updateManilaTime();
-    setInterval(updateManilaTime, 1000);
-</script>
-        
+        .footer-right a {
+            text-decoration: none;
+            color: #777;
+            font-weight: bold;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Lawrence M Lopez</h1>
+    <div id="manila-clock">Loading Manila Time...</div>
 
-    <div class="footer-left">
-        &copy; Lawrence M Lopez
-    </div>
+    <h1>lawrence lopez</h1>
 
     <div class="footer-right">
-    <a href="./about.html">about</a> &nbsp;-&nbsp; 
-    <a href="./contact.html">contact</a> &nbsp;-&nbsp; 
-    <a href="./gear.html">gear</a> &nbsp;-&nbsp; 
-    <a href="./think.html">think</a>
-</div>
+        <a href="./about.html">about</a> - 
+        <a href="./contact.html">contact</a> - 
+        <a href="./gear.html">gear</a> - 
+        <a href="./think.html">think</a>
+    </div>
+
+    <script>
+        function updateManilaTime() {
+            const now = new Date();
+            const options = {
+                timeZone: 'Asia/Manila',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            const manilaTime = now.toLocaleTimeString('en-US', options);
+            document.getElementById('manila-clock').innerText = "Manila: " + manilaTime;
+        }
+
+        // Start the clock
+        updateManilaTime();
+        setInterval(updateManilaTime, 1000);
+    </script>
+
 </body>
 </html>
