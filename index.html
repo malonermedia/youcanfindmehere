@@ -4,6 +4,7 @@
     <title>Lawrence Lopez</title>
     <style>
         body {
+            
             background-color: #f5f5dc; /* Beige */
             display: flex;
             justify-content: center; 
@@ -11,6 +12,7 @@
             height: 100vh;           
             margin: 0;
             position: relative; 
+            <div id="manila-clock"></div>
         }
 
     h1 {
@@ -41,6 +43,36 @@
             font-size: 14px;
             color: #777;
         }
+            #manila-clock {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16px;
+    color: #888; /* Subtle gray */
+    letter-spacing: 1px;
+}
+
+            <script>
+    function updateManilaTime() {
+        const now = new Date();
+        const options = {
+            timeZone: 'Asia/Manila',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        };
+        const manilaTime = now.toLocaleTimeString('en-US', options);
+        document.getElementById('manila-clock').innerText = "Manila: " + manilaTime;
+    }
+
+    // Update the clock immediately, then every 1 second
+    updateManilaTime();
+    setInterval(updateManilaTime, 1000);
+</script>
+        
     </style>
 </head>
 <body>
