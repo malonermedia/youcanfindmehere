@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Think - Lawrence Lopez</title>
+    <style>
+        body {
+            background-color: #faf9f6; /* Off-white */
+            margin: 0;
+            padding: 20px;
+            font-family: "Times New Roman", Times, serif;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* The title in the center */
+        h1 {
+            text-align: center;
+            font-style: italic;
+            font-weight: normal;
+            font-size: 60px;
+            color: #333;
+            margin-top: 50px;
+        }
+
+        .total-counter {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #777;
+            margin-top: 10px;
+        }
+
+        /* Stats in the top left */
+        .stats-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 20px;
+            line-height: 2;
+            color: #333;
+        }
+
+        .stat-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .plus-btn {
+            cursor: pointer;
+            background: #eee;
+            border: 1px solid #ccc;
+            padding: 0 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .plus-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .footer-right {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .footer-right a {
+            text-decoration: none;
+            color: #777;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>think</h1>
+
+    <div class="total-counter">
+        Total Points Used: <span id="total">0</span> / 365
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-row">Strength: <span id="str">0</span> <span class="plus-btn" onclick="addPoint('str')">+</span></div>
+        <div class="stat-row">Dexterity: <span id="dex">0</span> <span class="plus-btn" onclick="addPoint('dex')">+</span></div>
+        <div class="stat-row">Vitality: <span id="vit">0</span> <span class="plus-btn" onclick="addPoint('vit')">+</span></div>
+        <div class="stat-row">Intelligence: <span id="int">0</span> <span class="plus-btn" onclick="addPoint('int')">+</span></div>
+    </div>
+
+    <div class="footer-right">
+        <a href="index.html">home</a>
+    </div>
+
+    <script>
+        let totalPoints = 0;
+        const maxPoints = 365;
+        
+        const stats = { str: 0, dex: 0, vit: 0, int: 0 };
+
+        function addPoint(statName) {
+            if (totalPoints < maxPoints) {
+                stats[statName]++;
+                totalPoints++;
+                document.getElementById(statName).innerText = stats[statName];
+                document.getElementById('total').innerText = totalPoints;
+            } else {
+                alert("All 365 points for the year have been used!");
+            }
+        }
+    </script>
+
+</body>
+</html>
