@@ -4,7 +4,7 @@
     <title>Lawrence Lopez</title>
     <style>
         body {
-            background-color: #faf9f6; /* Off-white */
+            background-color: #faf9f6; /* Off-white / Beige */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -14,7 +14,7 @@
             font-family: "Times New Roman", Times, serif;
         }
 
-        /* 1. The Clock Styling */
+        /* The Clock at the top center */
         #manila-clock {
             position: absolute;
             top: 20px;
@@ -25,7 +25,6 @@
             letter-spacing: 1px;
         }
 
-        /* 2. The Main Title */
         h1 {
             font-style: italic;
             font-weight: normal;
@@ -33,7 +32,16 @@
             color: #333;
         }
 
-        /* 3. The Footer Links */
+        /* BOTTOM LEFT: Copyright section */
+        .footer-left {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* BOTTOM RIGHT: Navigation links */
         .footer-right {
             position: absolute;
             bottom: 20px;
@@ -53,6 +61,10 @@
     <div id="manila-clock">Loading Manila Time...</div>
 
     <h1>lawrence lopez</h1>
+
+    <div class="footer-left">
+        © 2026 Lawrence Lopez
+    </div>
 
     <div class="footer-right">
         <a href="./about.html">about</a> - 
@@ -74,8 +86,6 @@
             const manilaTime = now.toLocaleTimeString('en-US', options);
             document.getElementById('manila-clock').innerText = "Manila: " + manilaTime;
         }
-
-        // Start the clock
         updateManilaTime();
         setInterval(updateManilaTime, 1000);
     </script>
