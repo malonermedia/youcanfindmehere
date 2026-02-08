@@ -1,59 +1,68 @@
-<style>
-    body {
-        background-color: #faf9f6;
-        display: flex;
-        flex-direction: column; /* Stacks title and links vertically */
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        position: relative;
-        font-family: "Times New Roman", Times, serif;
-    }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lawrence Lopez</title>
+    <link rel="icon" type="image/png" href="./favicon.png?v=2">
+    <style>
+        /* THIS FORCES TIMES NEW ROMAN EVERYWHERE */
+        * {
+            font-family: "Times New Roman", Times, serif !important;
+        }
 
-    #manila-clock {
-        position: absolute;
-        top: 20px;
-        font-size: 16px;
-        color: #888;
-        letter-spacing: 1px;
-    }
+        body {
+            background-color: #faf9f6;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
 
-    h1 {
-        font-style: italic;
-        font-weight: normal;
-        font-size: 80px;
-        color: #333;
-        margin: 0;
-    }
+        #manila-clock {
+            position: absolute;
+            top: 20px;
+            font-size: 16px;
+            color: #888;
+            letter-spacing: 1px;
+            /* No more loading flicker because we update it immediately in JS */
+        }
 
-    /* CENTERED LINKS */
-    .nav-container {
-        margin-top: 20px;
-        font-size: 20px; /* Bigger for mobile fingers */
-        color: #777;
-    }
+        h1 {
+            font-style: italic;
+            font-weight: normal;
+            font-size: 80px;
+            color: #333;
+            margin: 0;
+        }
 
-    .nav-container a {
-        text-decoration: none;
-        color: #777;
-        font-weight: bold;
-        padding: 0 5px;
-    }
+        /* CENTERED NAVIGATION */
+        .nav-container {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #777;
+        }
 
-    .footer-left {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        font-size: 14px;
-        color: #999;
-    }
-</style>
+        .nav-container a {
+            text-decoration: none;
+            color: #777;
+            font-weight: bold;
+            padding: 0 5px;
+        }
 
+        .footer-left {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 14px;
+            color: #999;
+        }
+    </style>
+</head>
 <body>
-    <div id="manila-clock">Loading Manila Time...</div>
 
-    <h1>lawrence lopez</h1>
+    <div id="manila-clock"></div> <h1>lawrence lopez</h1>
 
     <div class="nav-container">
         <a href="./about.html">about</a> - 
@@ -65,5 +74,26 @@
     <div class="footer-left">
         © 2026 Lawrence Lopez
     </div>
-    
-    </body>
+
+    <script>
+        function updateManilaTime() {
+            const now = new Date();
+            const options = {
+                timeZone: 'Asia/Manila',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            const manilaTime = now.toLocaleTimeString('en-US', options);
+            document.getElementById('manila-clock').innerText = "Manila: " + manilaTime;
+        }
+
+        // 1. Run immediately so there is no "Loading" delay
+        updateManilaTime(); 
+        
+        // 2. Then update every second
+        setInterval(updateManilaTime, 1000);
+    </script>
+</body>
+</html>
