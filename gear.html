@@ -11,19 +11,19 @@
         }
 
         body {
-            background-color: #7393B3; /* Muted Blue-Gray */
+            background-color: #faf9f6; /* Beige Background */
             margin: 0;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Centers the content container */
-            justify-content: flex-start; /* Starts content from the top */
+            align-items: center; 
+            justify-content: flex-start;
             min-height: 100vh;
-            padding: 100px 20px 40px 20px; /* Extra top padding for Home button space */
+            padding: 100px 20px 40px 20px; 
             position: relative;
-            color: #ffffff; /* White text for better contrast */
+            color: #333; /* Darker text for beige background */
         }
 
-        /* Top Center Home Button */
+        /* Top Center Home Button - Plain (No Border) */
         .top-nav {
             position: absolute;
             top: 40px;
@@ -33,12 +33,10 @@
 
         .top-nav a {
             text-decoration: none;
-            color: #ffffff;
+            color: #777;
             font-weight: bold;
             letter-spacing: 1px;
-            border: 1px solid #ffffff;
-            padding: 5px 15px;
-            border-radius: 5px;
+            /* Border removed here */
         }
 
         /* The Gear Content (Aligned Left) */
@@ -54,11 +52,10 @@
             margin-top: 30px;
             margin-bottom: 10px;
             display: block;
-            color: #f0f0f0;
         }
 
         .gear-list {
-            list-style-type: none; /* Removes bullets */
+            list-style-type: none;
             padding: 0;
             margin: 0;
             line-height: 1.6;
