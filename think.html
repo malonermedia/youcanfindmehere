@@ -2,115 +2,168 @@
 <html>
 <head>
     <title>Think - Lawrence Lopez</title>
-    <link rel="icon" type="image/png" href="./favicon.png">
+    <link rel="icon" type="image/png" href="./favicon.png?v=2">
     <style>
+        /* Force Times New Roman and size 20px everywhere */
+        * { 
+            font-family: "Times New Roman", Times, serif !important; 
+            font-size: 20px;
+        }
+
         body {
-            background-color: #faf9f6; /* Off-white */
+            background-color: #faf9f6; /* Beige */
             margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
             padding: 20px;
-            font-family: "Times New Roman", Times, serif;
-            height: 100vh;
             position: relative;
         }
 
-        /* The title in the center */
-        h1 {
-            text-align: center;
-            font-style: italic;
-            font-weight: normal;
-            font-size: 60px;
-            color: #333;
-            margin-top: 50px;
-        }
-
-        .total-counter {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: #777;
-            margin-top: 10px;
-        }
-
-        /* Stats in the top left */
-        .stats-container {
+        /* Top Center Home Button */
+        .top-nav {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 20px;
-            line-height: 2;
-            color: #333;
+            top: 40px;
         }
 
-        .stat-row {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .plus-btn {
-            cursor: pointer;
-            background: #eee;
-            border: 1px solid #ccc;
-            padding: 0 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            user-select: none;
-            transition: background 0.2s;
-        }
-
-        .plus-btn:hover {
-            background: #e0e0e0;
-        }
-
-        .footer-right {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-        }
-
-        .footer-right a {
+        .top-nav a {
             text-decoration: none;
             color: #777;
             font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .game-container {
+            max-width: 600px;
+        }
+
+        .stats {
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .job-title {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        .btn {
+            background: none;
+            border: 1px solid #777;
+            padding: 10px 25px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #eee;
+        }
+
+        .choice-container {
+            margin-top: 20px;
+            display: none; /* Hidden until level requirements met */
         }
     </style>
 </head>
 <body>
 
-    <h1>think</h1>
-
-    <div class="total-counter">
-        Total Points Used: <span id="total">0</span> / 365
+    <div class="top-nav">
+        <a href="./index.html">home</a>
     </div>
 
-    <div class="stats-container">
-        <div class="stat-row">Strength: <span id="str">0</span> <span class="plus-btn" onclick="addPoint('str')">+</span></div>
-        <div class="stat-row">Dexterity: <span id="dex">0</span> <span class="plus-btn" onclick="addPoint('dex')">+</span></div>
-        <div class="stat-row">Vitality: <span id="vit">0</span> <span class="plus-btn" onclick="addPoint('vit')">+</span></div>
-        <div class="stat-row">Intelligence: <span id="int">0</span> <span class="plus-btn" onclick="addPoint('int')">+</span></div>
-    </div>
+    <div class="game-container">
+        <h1>level up</h1>
+        
+        <div class="stats">
+            Level: <span id="level-display">1</span><br>
+            Job: <span id="job-display" class="job-title">Novice</span>
+        </div>
 
-    <div class="footer-right">
-    <a href="./index.html">home</a>
-</div>
+        <button class="btn" id="attack-btn" onclick="attack()">Attack</button>
+        <button class="btn" onclick="saveGame()">Save Progress</button>
+
+        <div id="job-choice" class="choice-container">
+            <p>Choose your path:</p>
+            <div id="choice-buttons"></div>
+        </div>
+    </div>
 
     <script>
-        let totalPoints = 0;
-        const maxPoints = 365;
-        
-        const stats = { str: 0, dex: 0, vit: 0, int: 0 };
+        let level = 1;
+        let job = "Novice";
 
-        function addPoint(statName) {
-            if (totalPoints < maxPoints) {
-                stats[statName]++;
-                totalPoints++;
-                document.getElementById(statName).innerText = stats[statName];
-                document.getElementById('total').innerText = totalPoints;
+        // Load game on page start
+        window.onload = function() {
+            const savedLevel = localStorage.getItem('playerLevel');
+            const savedJob = localStorage.getItem('playerJob');
+            if (savedLevel) level = parseInt(savedLevel);
+            if (savedJob) job = savedJob;
+            updateDisplay();
+        };
+
+        function attack() {
+            level++;
+            updateDisplay();
+            checkJobChange();
+        }
+
+        function updateDisplay() {
+            document.getElementById('level-display').innerText = level;
+            document.getElementById('job-display').innerText = job;
+        }
+
+        function checkJobChange() {
+            const choiceDiv = document.getElementById('job-choice');
+            const btnContainer = document.getElementById('choice-buttons');
+            
+            // 1st Job Change at Level 15
+            if (level === 15 && job === "Novice") {
+                showChoices(["Consumer", "Creator", "Worker", "Merchant"]);
+            } 
+            // 2nd Job Change at Level 60
+            else if (level === 60 && ["Consumer", "Creator", "Worker", "Merchant"].includes(job)) {
+                showChoices(["old and happy", "old and sad", "old and with wisdom", "old and regular happy and sad", "just old"]);
             } else {
-                alert("All 365 points for the year have been used!");
+                choiceDiv.style.display = "none";
             }
         }
-    </script>
 
+        function showChoices(options) {
+            const choiceDiv = document.getElementById('job-choice');
+            const btnContainer = document.getElementById('choice-buttons');
+            const attackBtn = document.getElementById('attack-btn');
+            
+            attackBtn.style.display = "none"; // Pause attacking until choice is made
+            btnContainer.innerHTML = "";
+            choiceDiv.style.display = "block";
+
+            options.forEach(opt => {
+                let b = document.createElement("button");
+                b.className = "btn";
+                b.innerText = opt;
+                b.onclick = () => selectJob(opt);
+                btnContainer.appendChild(b);
+            });
+        }
+
+        function selectJob(newJob) {
+            job = newJob;
+            document.getElementById('job-choice').style.display = "none";
+            document.getElementById('attack-btn').style.display = "inline-block";
+            updateDisplay();
+        }
+
+        function saveGame() {
+            localStorage.setItem('playerLevel', level);
+            localStorage.setItem('playerJob', job);
+            alert("Progress Saved!");
+        }
+    </script>
 </body>
 </html>
