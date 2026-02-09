@@ -4,7 +4,7 @@
     <title>Lawrence Lopez</title>
     <link rel="icon" type="image/png" href="./favicon.png?v=2">
     <style>
-        /* THIS FORCES TIMES NEW ROMAN EVERYWHERE */
+        /* Force Times New Roman Everywhere */
         * {
             font-family: "Times New Roman", Times, serif !important;
         }
@@ -20,13 +20,13 @@
             position: relative;
         }
 
+        /* Manila Clock - Set to 30px */
         #manila-clock {
             position: absolute;
-            top: 20px;
-            font-size: 16px;
-            color: #888;
+            top: 30px;
+            font-size: 30px;
+            color: #555;
             letter-spacing: 1px;
-            /* No more loading flicker because we update it immediately in JS */
         }
 
         h1 {
@@ -35,20 +35,30 @@
             font-size: 80px;
             color: #333;
             margin: 0;
+            margin-top: 40px; /* Space for the clock */
         }
 
-        /* CENTERED NAVIGATION */
-        .nav-container {
+        /* NAVIGATION - Fixed to prevent blue colors */
+        .top-nav {
             margin-top: 20px;
             font-size: 20px;
             color: #777;
         }
 
-        .nav-container a {
-            text-decoration: none;
-            color: #777;
+        .top-nav a {
+            text-decoration: none; /* Removes underline */
+            color: #777 !important; /* Forces gray color */
             font-weight: bold;
             padding: 0 5px;
+        }
+
+        /* Keeps links gray even after they are clicked */
+        .top-nav a:visited {
+            color: #777 !important;
+        }
+
+        .top-nav a:hover {
+            color: #333 !important;
         }
 
         .footer-left {
@@ -62,7 +72,9 @@
 </head>
 <body>
 
-    <div id="manila-clock"></div> <h1>lawrence lopez</h1>
+    <div id="manila-clock"></div> 
+
+    <h1>lawrence lopez</h1>
 
     <div class="top-nav">
         <a href="./about.html">about</a> - 
@@ -90,10 +102,7 @@
             document.getElementById('manila-clock').innerText = "Manila: " + manilaTime;
         }
 
-        // 1. Run immediately so there is no "Loading" delay
         updateManilaTime(); 
-        
-        // 2. Then update every second
         setInterval(updateManilaTime, 1000);
     </script>
 </body>
