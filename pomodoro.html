@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pomodoro - Lawrence Lopez</title>
+    <link rel="icon" type="image/png" href="./favicon.png?v=2">
+    <style>
+        /* Force Times New Roman and size 20px */
+        * { 
+            font-family: "Times New Roman", Times, serif !important; 
+            font-size: 20px;
+        }
+
+        body {
+            background-color: #faf9f6; /* Beige */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            position: relative;
+            color: #333;
+        }
+
+        /* Top Center Home Button */
+        .top-nav {
+            position: absolute;
+            top: 40px;
+        }
+
+        .top-nav a {
+            text-decoration: none;
+            color: #777;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* Timer Display */
+        #timer-display {
+            font-size: 100px;
+            margin: 20px 0;
+            cursor: pointer; /* Indicates it's clickable to add time */
+            user-select: none;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: none;
+            border: 1px solid #777;
+            padding: 8px 15px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #eee;
+        }
+
+        .btn-start { border-color: #333; font-weight: bold; }
+        .btn-reset { border-color: #cc0000; color: #cc0000; }
+
+        .presets {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        <a href="./index.html">home</a>
+    </div>
+
+    <div class="pomodoro-container">
+        <div class="presets">
+            <button class="btn" onclick="setTime(10)">10m</button>
+            <button class="btn" onclick="setTime(15)">15m</button>
+            <button class="btn" onclick="setTime(20)">20m</button>
+            <button class="btn" onclick="setTime(25)">25m</button>
+        </div>
+
+        <div id="timer-display" onclick="addOneMinute()">25:00</div>
+        <p style="font-size: 14px; color: #999;">(click the numbers to add +1 min)</p>
+
+        <div class="controls">
+            <button class="btn btn-start" id="start-btn" onclick="toggleTimer()">Start</button>
+            <button class="btn btn-reset" onclick="resetTimer()">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 1500; // 25 minutes in seconds
+        let timerId = null;
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timer-display').innerText = display;
+            document.title = display + " - Pomodoro";
+        }
+
+        function setTime(mins) {
+            stopTimer();
+            timeLeft = mins * 60;
+            updateDisplay();
+        }
+
+        function addOneMinute() {
+            timeLeft += 60;
+            updateDisplay();
+        }
+
+        function toggleTimer() {
+            if (timerId) {
+                stopTimer();
+            } else {
+                startTimer();
+            }
+        }
+
+        function startTimer() {
+            if (timeLeft > 0) {
+                document.getElementById('start-btn').innerText = "Pause";
+                timerId = setInterval(() => {
+                    timeLeft--;
+                    updateDisplay();
+                    if (timeLeft <= 0) {
+                        stopTimer();
+                        alert("Time is up!");
+                    }
+                }, 1000);
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(timerId);
+            timerId = null;
+            document.getElementById('start-btn').innerText = "Start";
+        }
+
+        function resetTimer() {
+            stopTimer();
+            timeLeft = 1500;
+            updateDisplay();
+        }
+    </script>
+</body>
+</html>
